@@ -2,6 +2,7 @@ package com.example.mobile_cw2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.Navigation
@@ -42,4 +43,5 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+
 }
