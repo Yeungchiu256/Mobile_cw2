@@ -75,7 +75,7 @@ class SecondFragment : Fragment() {
             }
     }
 
-    fun onCameraClicked(v: View) {
+    private fun onCameraClicked(v: View) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CATPURE)
 
@@ -94,7 +94,7 @@ class SecondFragment : Fragment() {
     }
 
     //select uploadPhoto
-    fun onPhotoLibraryClicked(v : View) {
+    private fun onPhotoLibraryClicked(v : View) {
         val pickerIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(pickerIntent, REQUEST_SELECT_IMAGE)
     }

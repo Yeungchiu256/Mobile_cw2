@@ -1,11 +1,16 @@
 package com.example.mobile_cw2
 
 //Login Fragment
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,12 +27,16 @@ class ThirdFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    //Firebase Auth
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        auth= FirebaseAuth.getInstance()
     }
 
     override fun onCreateView(
@@ -35,7 +44,13 @@ class ThirdFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_third, container, false)
+        //return inflater.inflate(R.layout.fragment_third, container, false)
+        val view = inflater?.inflate(R.layout.fragment_third, container, false)
+        val registerButton = view?.findViewById<Button>(R.id.buttonRegister)
+        val goToLoginButton = view?.findViewById<Button>(R.id.textViewLogin)
+        registerButton?.setOnClickListener { v: View -> register(v) }
+        goToLoginButton?.setOnClickListener { v: View -> goToLogin(v) }
+        return view
     }
 
     companion object {
@@ -57,4 +72,29 @@ class ThirdFragment : Fragment() {
                 }
             }
     }
+
+    fun register(view: View) {
+        val editTextEmailAddress=view?.findViewById<EditText>(R.id.editTextEmailAddress)
+        val editTextPassword=view?.findViewById<EditText>(R.id.editTextPassword)
+        val email= editTextEmailAddress?.text.toString()
+        val password=editTextPassword?.text.toString()
+        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
+            if(task.isSuccessful){
+                //val intent= Intent(this,MainActivity::class.java)
+                //startActivity(intent)
+                //activity?.finish()
+
+                //pass the value to firstFragment to change to user or admin privilege
+            }
+        }.addOnFailureListener { exception ->
+            Toast.makeText(activity?.applicationContext,exception.localizedMessage, Toast.LENGTH_LONG).show()
+        }
+
+    }
+    fun goToLogin(view: View) {
+        //val intent= Intent(this,LoginActivity::class.java)
+        //startActivity(intent)
+
+    }
+
 }
